@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TesterUp - Werde bezahlt für das Testen von Spielen</title>
+<style>
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+body {
+font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+color: white;
+overflow-x: hidden;
+}
+
+.container {
+max-width: 500px;
+margin: 0 auto;
+padding: 20px;
+min-height: 100vh;
+position: relative;
+}
+
+.header {
+text-align: center;
+margin-bottom: 20px;
+animation: fadeInDown 0.8s ease-out;
+}
+
+.logo {
+width: 200px;
+height: auto;
+margin-bottom: 20px;
+filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+}
+
+.hero-text {
+font-size: 28px;
+font-weight: 800;
+background: linear-gradient(45deg, #c41e3a, #e74c3c);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+margin-bottom: 10px;
+line-height: 1.2;
+}
+
+.subtitle {
+font-size: 18px;
+color: #ffffff;
+opacity: 0.9;
+margin-bottom: 20px;
+}
+
+.earnings-banner {
+background: rgba(255, 255, 255, 0.08);
+border: 2px solid #c41e3a;
+border-radius: 15px;
+padding: 20px;
+text-align: center;
+margin-bottom: 15px;
+animation: pulse 2s infinite;
+box-shadow: 0 8px 32px rgba(196, 30, 58, 0.2);
+backdrop-filter: blur(10px);
+}
+
+.earnings-text {
+font-size: 16px;
+margin-bottom: 8px;
+opacity: 0.9;
+}
+
+.earnings-amount {
+font-size: 32px;
+font-weight: 900;
+text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+color: #00ff88;
+}
+
+.pro-tip {
+background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 165, 0, 0.15));
+border: 2px solid #ffd700;
+border-radius: 15px;
+padding: 20px;
+margin-bottom: 15px;
+animation: pulse 2s infinite;
+box-shadow: 0 8px 32px rgba(255, 215, 0, 0.2);
+backdrop-filter: blur(10px);
+position: relative;
+overflow: hidden;
+}
+
+.pro-tip::before {
+content: '';
+position: absolute;
+top: -50%;
+left: -50%;
+width: 200%;
+height: 200%;
+background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+animation: shimmer 3s infinite;
+}
+
+.pro-tip-header {
+display: flex;
+align-items: center;
+justify-content: center;
+margin-bottom: 12px;
+position: relative;
+z-index: 1;
+}
+
+.pro-tip-icon {
+font-size: 24px;
+margin-right: 8px;
+}
+
+.pro-tip-title {
+font-size: 18px;
+font-weight: 800;
+color: #ffd700;
+text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.pro-tip-content {
+position: relative;
+z-index: 1;
+}
+
+.pro-tip-desc {
+font-size: 16px;
+line-height: 1.4;
+margin-bottom: 10px;
+color: #ffffff;
+font-weight: 600;
+}
+
+.pro-tip-earnings {
+font-size: 20px;
+font-weight: 800;
+color: #ffd700;
+text-align: center;
+text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.features {
+margin-bottom: 30px;
+}
+
+.feature-item {
+background: rgba(255, 255, 255, 0.08);
+border-radius: 12px;
+padding: 20px;
+margin-bottom: 15px;
+backdrop-filter: blur(10px);
+border: 1px solid rgba(255, 255, 255, 0.1);
+animation: fadeInUp 0.6s ease-out;
+transition: transform 0.3s ease;
+}
+
+.feature-item:hover {
+transform: translateY(-2px);
+}
+
+.feature-item:nth-child(1) {
+animation-delay: 0.2s;
+}
+
+.feature-item:nth-child(2) {
+animation-delay: 0.4s;
+}
+
+.feature-icon {
+width: 40px;
+height: 40px;
+background: linear-gradient(45deg, #c41e3a, #e74c3c);
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 20px;
+margin-bottom: 12px;
+}
+
+.feature-title {
+font-size: 18px;
+font-weight: 700;
+margin-bottom: 8px;
+color: #ffffff;
+}
+
+.feature-desc {
+font-size: 14px;
+color: #cccccc;
+line-height: 1.4;
+}
+
+.cta-section {
+text-align: center;
+margin-bottom: 15px;
+}
+
+.download-btn {
+background: linear-gradient(135deg, #c41e3a, #e74c3c);
+color: white;
+border: none;
+border-radius: 12px;
+padding: 18px 40px;
+font-size: 18px;
+font-weight: 700;
+width: 100%;
+cursor: pointer;
+transition: all 0.3s ease;
+box-shadow: 0 8px 32px rgba(196, 30, 58, 0.4);
+text-transform: uppercase;
+letter-spacing: 1px;
+}
+
+.download-btn:hover {
+transform: translateY(-2px);
+box-shadow: 0 12px 40px rgba(196, 30, 58, 0.6);
+}
+
+.download-btn:active {
+transform: translateY(0);
+}
+
+.social-proof {
+text-align: center;
+margin-bottom: 20px;
+padding: 15px;
+background: rgba(255, 255, 255, 0.05);
+border-radius: 10px;
+border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.trust-indicators {
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 15px;
+margin-bottom: 20px;
+}
+
+.trust-item {
+display: flex;
+align-items: center;
+gap: 5px;
+font-size: 12px;
+color: #cccccc;
+}
+
+.floating-elements {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+pointer-events: none;
+z-index: -1;
+}
+
+.floating-coin {
+position: absolute;
+font-size: 20px;
+animation: float 6s ease-in-out infinite;
+opacity: 0.1;
+}
+
+.floating-coin:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+.floating-coin:nth-child(2) { top: 50%; right: 15%; animation-delay: 2s; }
+.floating-coin:nth-child(3) { bottom: 30%; left: 20%; animation-delay: 4s; }
+
+.steps {
+margin-bottom: 15px;
+}
+
+.step {
+display: flex;
+align-items: center;
+margin-bottom: 10px;
+padding: 12px;
+background: rgba(255, 255, 255, 0.05);
+border-radius: 10px;
+border-left: 4px solid #c41e3a;
+}
+
+.step-number {
+width: 30px;
+height: 30px;
+background: #c41e3a;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-weight: bold;
+margin-right: 15px;
+font-size: 14px;
+}
+
+.step-text {
+font-size: 16px;
+font-weight: 600;
+}
+
+@keyframes fadeInDown {
+from {
+opacity: 0;
+transform: translateY(-30px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+@keyframes fadeInUp {
+from {
+opacity: 0;
+transform: translateY(30px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+@keyframes pulse {
+0%, 100% {
+transform: scale(1);
+}
+50% {
+transform: scale(1.02);
+}
+}
+
+@keyframes float {
+0%, 100% {
+transform: translateY(0px) rotate(0deg);
+}
+50% {
+transform: translateY(-20px) rotate(180deg);
+}
+}
+
+@keyframes shimmer {
+0% {
+transform: translateX(-100%) translateY(-100%) rotate(45deg);
+}
+100% {
+transform: translateX(100%) translateY(100%) rotate(45deg);
+}
+}
+
+.countdown {
+background: rgba(255, 255, 255, 0.08);
+border: 1px solid #c41e3a;
+border-radius: 10px;
+padding: 15px;
+text-align: center;
+margin-bottom: 15px;
+font-weight: bold;
+backdrop-filter: blur(10px);
+}
+
+@media (max-width: 480px) {
+.hero-text {
+font-size: 24px;
+}
+
+.earnings-amount {
+font-size: 28px;
+}
+
+.container {
+padding: 15px;
+}
+
+.pro-tip-earnings {
+font-size: 18px;
+}
+}
+</style>
+</head>
+<body>
+<div class="floating-elements">
+<div class="floating-coin">💰</div>
+<div class="floating-coin">🎮</div>
+<div class="floating-coin">💎</div>
+</div>
+
+<div class="container">
+<div class="header">
+<img src="https://i.imgur.com/8GbmUO0.png" alt="TesterUp" class="logo">
+<div class="hero-text">Werde für Spielen bezahlt!</div>
+<div class="subtitle">Verwandle deine Spielzeit in echtes Geld</div>
+</div>
+
+<div class="countdown">
+⏰ Zeitlich begrenzt: Doppelte Belohnungen für neue Nutzer!
+</div>
+
+<div class="earnings-banner">
+<div class="earnings-text">Durchschnittliche Tageseinnahmen</div>
+<div class="earnings-amount">100€+</div>
+</div>
+
+<div class="cta-section">
+<button class="download-btn" id="downloadBtn">
+🚀 JETZT GELD VERDIENEN
+</button>
+</div>
+
+<div class="steps">
+<div class="step">
+<div class="step-number">1</div>
+<div class="step-text">Lade die App herunter</div>
+</div>
+<div class="step">
+<div class="step-number">2</div>
+<div class="step-text">Wähle ein paar Spiele & steige auf</div>
+</div>
+<div class="step">
+<div class="step-number">3</div>
+<div class="step-text">Beginne auszuzahlen!</div>
+</div>
+</div>
+
+<div class="pro-tip">
+<div class="pro-tip-header">
+<div class="pro-tip-icon">⚡</div>
+<div class="pro-tip-title">PROFI-TIPP: In-Game-Upgrades</div>
+</div>
+<div class="pro-tip-content">
+<div class="pro-tip-desc">Kaufe In-Game-Upgrades und erhalte 100% Rückerstattung + Bonusprämien!</div>
+<div class="pro-tip-earnings">Steigere Auszahlungen um 200-300€/Woche!</div>
+</div>
+</div>
+
+<div class="features">
+<div class="feature-item">
+<div class="feature-icon">🎮</div>
+<div class="feature-title">Teste beliebte Spiele</div>
+<div class="feature-desc">Spiele die neuesten Mobile-Games und verdiene Geld für jede Minute, die du spielst</div>
+</div>
+
+<div class="feature-item">
+<div class="feature-icon">💰</div>
+<div class="feature-title">Sofortige Auszahlungen</div>
+<div class="feature-desc">Auszahlung auf PayPal, Gutscheine oder Krypto, sobald du die Mindestschwelle erreichst</div>
+</div>
+</div>
+
+<div class="social-proof">
+<div style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">Schließe dich über 500.000 glücklichen Gamern an</div>
+<div style="font-size: 14px; color: #cccccc;">⭐⭐⭐⭐⭐ 4,8/5 App Store Bewertung</div>
+</div>
+
+<div class="trust-indicators">
+<div class="trust-item">
+<span>🔒</span>
+<span>Sicher & Geschützt</span>
+</div>
+<div class="trust-item">
+<span>✅</span>
+<span>Keine versteckten Gebühren</span>
+</div>
+<div class="trust-item">
+<span>⚡</span>
+<span>Sofortige Einrichtung</span>
+</div>
+</div>
+</div>
+
+<script>
+// Function to get URL parameter
+function getUrlParameter(name) {
+name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+var results = regex.exec(location.search);
+return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
+
+// Set up the download button with proper tracking
+function setupDownloadButton() {
+const sub2Param = getUrlParameter('sub2');
+
+let finalUrl;
+
+// Check if sub2 starts with "uk" (case-insensitive)
+if (sub2Param && sub2Param.toLowerCase().startsWith('uk')) {
+// Use UK offer link
+finalUrl = 'https://www.phef6trk.com/JNS98R/2K4X81C/?sub1=67be5d98b1408b00789983ae&sub2=';
+if (sub2Param) {
+finalUrl += '&sub2=' + encodeURIComponent(sub2Param);
+}
+} else if (sub2Param && sub2Param.toLowerCase().startsWith('ca')) {
+// Use UK offer link
+finalUrl = 'https://www.phef6trk.com/JNS98R/2K4X81C/?sub1=67be5d98b1408b00789983ae&sub2=';
+if (sub2Param) {
+finalUrl += '&aff_sub3=' + encodeURIComponent(sub2Param);
+}
+} else if (sub2Param && sub2Param.toLowerCase().startsWith('feng12')) {
+// Use UK offer link
+finalUrl = 'https://www.phef6trk.com/JNS98R/2K4X81C/?sub1=67be5d98b1408b00789983ae&sub2=';
+if (sub2Param) {
+finalUrl += '&aff_sub3=' + encodeURIComponent(sub2Param);
+}
+} else {
+// Use default offer link
+finalUrl = 'https://www.phef6trk.com/JNS98R/2K4X81C/?sub1=67be5d98b1408b00789983ae&sub2=';
+if (sub2Param) {
+finalUrl += '&sub2=' + encodeURIComponent(sub2Param);
+}
+}
+
+const downloadBtn = document.getElementById('downloadBtn');
+downloadBtn.addEventListener('click', function() {
+console.log('Download button clicked!', 'sub2:', sub2Param, 'URL:', finalUrl);
+window.open(finalUrl, '_blank');
+});
+}
+
+// Add some interactive elements
+document.querySelectorAll('.feature-item').forEach(item => {
+item.addEventListener('click', function() {
+this.style.transform = 'scale(0.98)';
+setTimeout(() => {
+this.style.transform = 'scale(1)';
+}, 150);
+});
+});
+
+// Animate earnings counter
+function animateCounter() {
+const counter = document.querySelector('.earnings-amount');
+const target = 100;
+let current = 0;
+const increment = target / 50;
+
+const timer = setInterval(() => {
+current += increment;
+if (current >= target) {
+current = target;
+clearInterval(timer);
+}
+counter.textContent = `${Math.floor(current)}€+`;
+}, 30);
+}
+
+// Start everything after page load
+window.addEventListener('load', () => {
+setupDownloadButton();
+});
+</script>
+</body>
+</html>
