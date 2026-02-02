@@ -480,14 +480,20 @@ font-size: 18px;
 <script>
 // Function to get URL parameter
 function getUrlParameter(name) {
-name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-var results = regex.exec(location.search);
-return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+  name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+  var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+  var results = regex.exec(location.search);
+  return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
 
 // Set up the download button with proper tracking
 function setupDownloadButton() {
+  const downloadBtn = document.getElementById('downloadBtn');
+  if (!downloadBtn) {
+    console.log('downloadBtn not found (id="downloadBtn")');
+    return;
+  }
+
   const sub2Param = getUrlParameter('sub2');
 
   // passthrough s1/s2/s3 from the current page URL
@@ -495,7 +501,7 @@ function setupDownloadButton() {
   const s2 = getUrlParameter('s2');
   const s3 = getUrlParameter('s3');
 
-  // Base offer link (same for all branches in your snippet)
+  // Base offer link
   const baseUrl = 'https://www.phef6trk.com/QZ85XF/2K4X81C/';
 
   // Decide which param key to use for sub2
@@ -503,25 +509,46 @@ function setupDownloadButton() {
   if (sub2Param) {
     const v = sub2Param.toLowerCase();
     if (v.startsWith('ca') || v.startsWith('feng12')) sub2Key = 'aff_sub3';
-    // uk/default => sub2
   }
 
-  // Build query params cleanly
+  // Build query params
   const qp = new URLSearchParams();
-
   if (sub2Param) qp.set(sub2Key, sub2Param);
   if (s1) qp.set('s1', s1);
   if (s2) qp.set('s2', s2);
   if (s3) qp.set('s3', s3);
 
-  // Final URL (no redirect—just a URL string you can use)
-  let finalUrl = baseUrl;
+  // Final URL
   const q = qp.toString();
-  if (q) finalUrl += (finalUrl.includes('?') ? '&' : '?') + q;
+  const finalUrl = q ? `${baseUrl}?${q}` : baseUrl;
 
-  // finalUrl is ready to use wherever you need (button click, href, window.open, etc.)
-  console.log('finalUrl:', finalUrl);
+  // Optional: set href too (if it's an <a>)
+  if (downloadBtn.tagName.toLowerCase() === 'a') {
+    downloadBtn.href = finalUrl;
+  }
+
+  // Attach click
+  let locked = false;
+  downloadBtn.addEventListener('click', function (e) {
+    // If it's not an <a>, prevent any default behavior
+    e.preventDefault();
+    if (locked) return;
+    locked = true;
+
+    console.log('Download click ->', finalUrl);
+
+    // Same-tab navigation is most reliable for mobile tracking
+    window.location.href = finalUrl;
+
+    // If you *need* new tab instead, use:
+    // window.open(finalUrl, '_blank', 'noopener,noreferrer');
+  });
 }
+
+// Run after DOM is ready
+document.addEventListener('DOMContentLoaded', setupDownloadButton);
+</script>
+
 
 const downloadBtn = document.getElementById('downloadBtn');
 downloadBtn.addEventListener('click', function() {
@@ -564,5 +591,6 @@ setupDownloadButton();
 </script>
 </body>
 </html>
+
 
 
