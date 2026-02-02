@@ -488,35 +488,39 @@ return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' ')
 
 // Set up the download button with proper tracking
 function setupDownloadButton() {
-const sub2Param = getUrlParameter('sub2');
+  const sub2Param = getUrlParameter('sub2');
 
-let finalUrl;
+  // passthrough s1/s2/s3 from the current page URL
+  const s1 = getUrlParameter('s1');
+  const s2 = getUrlParameter('s2');
+  const s3 = getUrlParameter('s3');
 
-// Check if sub2 starts with "uk" (case-insensitive)
-if (sub2Param && sub2Param.toLowerCase().startsWith('uk')) {
-// Use UK offer link
-finalUrl = 'https://www.phef6trk.com/QZ85XF/2K4X81C/';
-if (sub2Param) {
-finalUrl += '&sub2=' + encodeURIComponent(sub2Param);
-}
-} else if (sub2Param && sub2Param.toLowerCase().startsWith('ca')) {
-// Use UK offer link
-finalUrl = 'https://www.phef6trk.com/QZ85XF/2K4X81C/';
-if (sub2Param) {
-finalUrl += '&aff_sub3=' + encodeURIComponent(sub2Param);
-}
-} else if (sub2Param && sub2Param.toLowerCase().startsWith('feng12')) {
-// Use UK offer link
-finalUrl = 'https://www.phef6trk.com/QZ85XF/2K4X81C/';
-if (sub2Param) {
-finalUrl += '&aff_sub3=' + encodeURIComponent(sub2Param);
-}
-} else {
-// Use default offer link
-finalUrl = 'https://www.phef6trk.com/QZ85XF/2K4X81C/';
-if (sub2Param) {
-finalUrl += '&sub2=' + encodeURIComponent(sub2Param);
-}
+  // Base offer link (same for all branches in your snippet)
+  const baseUrl = 'https://www.phef6trk.com/QZ85XF/2K4X81C/';
+
+  // Decide which param key to use for sub2
+  let sub2Key = 'sub2';
+  if (sub2Param) {
+    const v = sub2Param.toLowerCase();
+    if (v.startsWith('ca') || v.startsWith('feng12')) sub2Key = 'aff_sub3';
+    // uk/default => sub2
+  }
+
+  // Build query params cleanly
+  const qp = new URLSearchParams();
+
+  if (sub2Param) qp.set(sub2Key, sub2Param);
+  if (s1) qp.set('s1', s1);
+  if (s2) qp.set('s2', s2);
+  if (s3) qp.set('s3', s3);
+
+  // Final URL (no redirect—just a URL string you can use)
+  let finalUrl = baseUrl;
+  const q = qp.toString();
+  if (q) finalUrl += (finalUrl.includes('?') ? '&' : '?') + q;
+
+  // finalUrl is ready to use wherever you need (button click, href, window.open, etc.)
+  console.log('finalUrl:', finalUrl);
 }
 
 const downloadBtn = document.getElementById('downloadBtn');
@@ -560,4 +564,5 @@ setupDownloadButton();
 </script>
 </body>
 </html>
+
 
