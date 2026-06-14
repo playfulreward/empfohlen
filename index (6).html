@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verdiene Geld mit deinen Lieblingsspielen | Empfohlen</title>
+<meta name="description" content="Spiele Top-Games wie Subway Surfers, Block Blast & Clash Royale und verdiene echtes Geld. Kostenlos, ohne Risiko, sofortige PayPal-Auszahlung.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(160deg, #fce4ec 0%, #fce4ec 30%, #fff0f3 60%, #fff8f9 100%);
+    min-height: 100vh;
+    color: #1a1a2e;
+  }
+
+  /* ── APP LOGO ── */
+  .app-logo-wrap {
+    display: flex;
+    justify-content: center;
+    padding-top: 24px;
+  }
+  .app-logo-wrap img {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  }
+
+  /* ── TIMER BADGE ── */
+  .timer-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 5px 13px;
+    background: #fff;
+    border-radius: 50px;
+    box-shadow: 0 2px 10px rgba(233,30,99,0.11);
+    width: fit-content;
+    margin: 10px auto 0;
+    font-size: 11px;
+    font-weight: 500;
+    color: #666;
+    border: 1px solid rgba(233,30,99,0.09);
+  }
+  .timer-badge .gift { font-size: 11px; }
+  .timer-badge .timer-label { color: #666; font-weight: 500; }
+  .timer-badge .timer-count {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #e91e63;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.4px;
+    min-width: 32px;
+    text-align: center;
+  }
+  .timer-badge .divider { color: #e0e0e0; }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center;
+    padding: 20px 20px 0;
+  }
+  .hero h1 {
+    font-size: clamp(26px, 7vw, 38px);
+    font-weight: 800;
+    color: #1a1a2e;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .hero h1 .pink { color: #e91e63; }
+
+  .rating-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin: 10px 0 18px;
+    font-size: 12px;
+    color: #777;
+  }
+  .rating-row .stars { color: #f4b400; font-size: 12px; }
+  .rating-row .dot { color: #ccc; }
+  .rating-row .platform-icons {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 11px;
+    color: #888;
+  }
+  .rating-row .platform-icons svg {
+    width: 13px;
+    height: 13px;
+    fill: #888;
+    flex-shrink: 0;
+  }
+
+  /* ── KEYFRAMES ── */
+
+  /*
+    Gloss: sits off-screen left for 70% of the cycle,
+    then eases across in 30% — no jump, no snap.
+    Using animation-timing-function steps trick avoided;
+    instead the streak is wide+soft so edges fade naturally.
+  */
+  @keyframes gloss-sweep {
+    0%   { transform: translateX(-120%) skewX(-15deg); opacity: 0; }
+    5%   { opacity: 1; }
+    30%  { transform: translateX(220%)  skewX(-15deg); opacity: 0; }
+    31%  { transform: translateX(-120%) skewX(-15deg); opacity: 0; }
+    100% { transform: translateX(-120%) skewX(-15deg); opacity: 0; }
+  }
+
+  /* Natural breathing — gentle scale only */
+  @keyframes cta-breathe {
+    0%, 100% { transform: scale(1);     }
+    50%      { transform: scale(1.018); }
+  }
+
+  /* ── GLOSSY BASE — shared ── */
+  .cta-btn, .play-btn {
+    position: relative;
+    overflow: hidden;
+    will-change: transform;
+  }
+
+  /* Subtle top-half static sheen */
+  .cta-btn::before, .play-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 46%;
+    background: linear-gradient(
+      180deg,
+      rgba(255,255,255,0.20) 0%,
+      rgba(255,255,255,0.00) 100%
+    );
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Gloss streak — wide feathered edges, very low peak opacity */
+  .cta-btn::after, .play-btn::after {
+    content: '';
+    position: absolute;
+    top: -20%;
+    left: 0;
+    width: 50%;
+    height: 140%;
+    background: linear-gradient(
+      100deg,
+      rgba(255,255,255,0.00)  0%,
+      rgba(255,255,255,0.00) 25%,
+      rgba(255,255,255,0.14) 45%,
+      rgba(255,255,255,0.20) 50%,
+      rgba(255,255,255,0.14) 55%,
+      rgba(255,255,255,0.00) 75%,
+      rgba(255,255,255,0.00) 100%
+    );
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0;
+    animation: gloss-sweep 5s linear infinite;
+  }
+
+  /* ── CTA BUTTON ── */
+  .cta-btn {
+    display: block;
+    width: calc(100% - 40px);
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 18px 28px;
+    background: linear-gradient(180deg, #ff5a95 0%, #e91e63 55%, #c2185b 100%);
+    color: #fff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    text-align: center;
+    border-radius: 50px;
+    text-decoration: none;
+    letter-spacing: 0.3px;
+    box-shadow: 0 6px 24px rgba(233,30,99,0.45), inset 0 1px 0 rgba(255,255,255,0.22);
+    /* Breathe and gloss both run; transform: scale from breathe, gloss uses its own pseudo */
+    animation: cta-breathe 3.6s ease-in-out infinite;
+  }
+  .cta-btn .arrow { margin-left: 8px; }
+
+  .cta-disclaimer {
+    text-align: center;
+    font-size: 11.5px;
+    color: #aaa;
+    margin: 10px 20px 0;
+    line-height: 1.4;
+  }
+
+  /* ── PROFI TIPP CARD ── */
+  .profi-card {
+    background: linear-gradient(135deg, #fff8e1 0%, #fff3e0 100%);
+    border: 1.5px solid #ffe082;
+    border-radius: 16px;
+    padding: 18px 18px 18px 18px;
+    margin: 24px 20px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .profi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #ffc107, #ff9800);
+    border-radius: 16px 16px 0 0;
+  }
+  .profi-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .profi-icon {
+    font-size: 20px;
+    line-height: 1;
+  }
+  .profi-tag {
+    font-size: 10px;
+    font-weight: 800;
+    color: #e65100;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    background: rgba(255,152,0,0.15);
+    padding: 3px 8px;
+    border-radius: 20px;
+  }
+  .profi-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #1a1a2e;
+    margin-bottom: 6px;
+  }
+  .profi-desc {
+    font-size: 13.5px;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+  .profi-highlight {
+    font-size: 15px;
+    font-weight: 800;
+    color: #e65100;
+  }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #e91e63;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin: 28px 20px 4px;
+  }
+
+  .section-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1a1a2e;
+    margin: 0 20px 16px;
+  }
+
+  /* ── GAME GRID ── */
+  .games-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 0 20px;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .game-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.15s;
+  }
+  .game-card:active { transform: scale(0.97); }
+
+  .game-img-wrap {
+    position: relative;
+    width: 100%;
+    padding-top: 75%;
+    overflow: hidden;
+  }
+  .game-img-wrap img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .game-badge {
+    position: absolute;
+    top: 8px; right: 8px;
+    background: #e91e63;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 800;
+    padding: 3px 7px;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+  }
+  .game-time-badge {
+    position: absolute;
+    bottom: 8px; left: 8px;
+    background: rgba(0,0,0,0.65);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .game-time-badge::before { content: '⚡'; font-size: 10px; }
+
+  .game-info { padding: 10px 12px 12px; }
+  .game-info h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 2px;
+  }
+  .game-info .sub { font-size: 11px; color: #999; margin-bottom: 1px; }
+  .game-info .sub-green { font-size: 11px; color: #4caf50; font-weight: 600; margin-bottom: 1px; }
+  .game-info .bis { font-size: 10px; color: #999; margin-top: 4px; }
+  .game-price-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2px;
+  }
+  .game-price { font-size: 17px; font-weight: 800; color: #e91e63; }
+  .game-rating { font-size: 12px; color: #f4b400; font-weight: 600; }
+
+  .play-btn {
+    display: block;
+    width: calc(100% - 24px);
+    margin: 0 12px 12px;
+    padding: 11px 0;
+    background: linear-gradient(180deg, #ff5a95 0%, #e91e63 55%, #c2185b 100%);
+    color: #fff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 3px 12px rgba(233,30,99,0.38), inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+
+  /* ── UNLOCK NOTICE ── */
+  .unlock-notice {
+    text-align: center;
+    font-size: 12px;
+    color: #aaa;
+    margin: 12px 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+  .unlock-notice a { color: #e91e63; font-weight: 600; text-decoration: none; }
+
+  /* ── STEPS ── */
+  .steps-label {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #999;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin: 32px 20px 16px;
+  }
+
+  .step-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px 20px 20px 68px;
+    margin: 0 20px 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    position: relative;
+    min-height: 80px;
+  }
+  .step-num {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, #ff5a95, #e91e63);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 800;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .step-card h3 { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .step-card p { font-size: 13px; color: #666; line-height: 1.4; }
+  .step-tag {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .step-tag.green { background: #e8f5e9; color: #388e3c; }
+  .step-tag.pink  { background: #fce4ec; color: #e91e63; }
+
+  /* ── REVIEWS ── */
+  .reviews-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #999;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin: 32px 20px 6px;
+  }
+  .reviews-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1a1a2e;
+    margin: 0 20px 16px;
+  }
+  .reviews-title .pink-bold { color: #e91e63; }
+
+  .review-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px;
+    margin: 0 20px 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .review-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .review-author { display: flex; align-items: center; gap: 10px; }
+  .avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; color: #fff;
+    flex-shrink: 0;
+  }
+  .avatar.lm { background: linear-gradient(135deg, #e91e63, #c2185b); }
+  .avatar.sk { background: linear-gradient(135deg, #9c27b0, #7b1fa2); }
+  .avatar.tr { background: linear-gradient(135deg, #e91e63, #c2185b); }
+  .author-info { display: flex; flex-direction: column; }
+  .author-name {
+    font-size: 14px; font-weight: 700; color: #1a1a2e;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .author-name .check { color: #4caf50; font-size: 13px; }
+  .review-stars { font-size: 13px; color: #f4b400; margin-top: 2px; }
+  .review-time { font-size: 12px; color: #bbb; }
+  .review-amount { font-size: 15px; font-weight: 700; color: #4caf50; white-space: nowrap; }
+  .review-text { font-size: 13.5px; color: #444; line-height: 1.5; }
+
+  /* ── FAQ ── */
+  .faq-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #999;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin: 32px 20px 6px;
+  }
+  .faq-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1a1a2e;
+    margin: 0 20px 16px;
+  }
+  .faq-title em { color: #e91e63; font-style: normal; }
+
+  .faq-item {
+    background: #fff;
+    border-radius: 16px;
+    margin: 0 20px 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+  .faq-q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a2e;
+    cursor: pointer;
+    gap: 8px;
+    user-select: none;
+  }
+  .faq-q .icon {
+    font-size: 20px;
+    line-height: 1;
+    flex-shrink: 0;
+    color: #ccc;
+    transition: transform 0.2s, color 0.2s;
+  }
+  .faq-item.open .faq-q .icon { transform: rotate(45deg); color: #e91e63; }
+  .faq-a {
+    display: none;
+    padding: 0 18px 16px;
+    font-size: 13.5px;
+    color: #555;
+    line-height: 1.5;
+  }
+  .faq-item.open .faq-a { display: block; }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 32px 20px 40px;
+    font-size: 12px;
+    color: #bbb;
+    line-height: 1.6;
+  }
+
+  .container { max-width: 520px; margin: 0 auto; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- App logo -->
+  <div class="app-logo-wrap">
+    <img src="https://cdn.aptoide.com/imgs/1/0/6/1068a97c7a03be8618d5d75029fb3e4d_icon.png" alt="App Logo">
+  </div>
+
+  <!-- Timer badge -->
+  <div class="timer-badge">
+    <span class="gift">🎁</span>
+    <span class="timer-label">Anmeldebonus läuft ab in</span>
+    <span class="timer-count" id="timer">15:00</span>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <h1>Verdiene Geld mit deinen<br><span class="pink">Lieblingsspielen</span></h1>
+    <div class="rating-row">
+      <span class="stars">★</span>
+      <span>4.4</span>
+      <span class="dot">•</span>
+      <span class="platform-icons">
+        <!-- Apple logo (official shape) -->
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.37 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        <!-- Android logo (official shape) -->
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85-.29-.15-.65-.06-.83.22l-1.88 3.24A9.822 9.822 0 0 0 12 8c-1.53 0-2.98.37-4.47 1.02L5.65 5.77c-.19-.29-.56-.38-.86-.22-.3.16-.42.54-.26.85L6.4 9.48C4.01 10.87 2.28 13.17 2 16h20c-.28-2.83-2.01-5.13-4.4-6.52zM8.95 13.8a1.05 1.05 0 1 1 0-2.1 1.05 1.05 0 0 1 0 2.1zm6.1 0a1.05 1.05 0 1 1 0-2.1 1.05 1.05 0 0 1 0 2.1zM2 17c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5v-1H2v1z"/></svg>
+        iOS &amp; Android
+      </span>
+    </div>
+    <a href="#" class="cta-btn" id="main-cta">GRATIS spielen &amp; verdienen <span class="arrow">→</span></a>
+    <p class="cta-disclaimer">⏳ Einige Spiele werden erst nach dem Spielen und Abschließen von Angeboten freigeschaltet und sind nur für begrenzte Zeit verfügbar.</p>
+  </div>
+
+  <!-- Profi Tipp -->
+  <div class="profi-card">
+    <div class="profi-header">
+      <span class="profi-icon">💡</span>
+      <span class="profi-tag">Profi-Tipp</span>
+    </div>
+    <div class="profi-title">In-Game-Upgrades</div>
+    <div class="profi-desc">Kaufe In-Game-Upgrades und erhalte alles zurück plus Bonusbelohnungen!</div>
+    <div class="profi-highlight">📈 Steigere deine Auszahlungen um 200–300 €/Woche!</div>
+  </div>
+
+  <!-- Games -->
+  <div class="section-label">🎮 TOP AUSWAHL</div>
+  <h2 class="section-title">Spiel &amp; verdien echtes Geld</h2>
+
+  <div class="games-grid">
+    <!-- Block Blast -->
+    <a href="#" class="game-card" data-link="true">
+      <div class="game-img-wrap">
+        <img src="https://play-lh.googleusercontent.com/Abzm9CjXi_DZjGzalQqVFMNZL8Wcx4uxtT5wcGOBaclbjvb3UYA2Bi6s6ff2SFRktdXehBsocFKkGUeIffUkLg" alt="Block Blast" loading="lazy">
+        <span class="game-badge">TOP</span>
+        <span class="game-time-badge">1 Std.</span>
+      </div>
+      <div class="game-info">
+        <h3>Block Blast</h3>
+        <div class="sub">Pro Spielstunde</div>
+        <div class="bis">BIS ZU</div>
+        <div class="game-price-row">
+          <span class="game-price">49,17 €</span>
+          <span class="game-rating">★ 4.9</span>
+        </div>
+      </div>
+      <span class="play-btn">Jetzt spielen &amp; verdienen</span>
+    </a>
+
+    <!-- Clash Royale -->
+    <a href="#" class="game-card" data-link="true">
+      <div class="game-img-wrap">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMt18VVv2_bw1FRALdGOsPqf027hhFfQVFzQ&s" alt="Clash Royale" loading="lazy">
+        <span class="game-badge">TOP</span>
+        <span class="game-time-badge">1 Std.</span>
+      </div>
+      <div class="game-info">
+        <h3>Clash Royale</h3>
+        <div class="sub">Pro Spielstunde</div>
+        <div class="bis">BIS ZU</div>
+        <div class="game-price-row">
+          <span class="game-price">47,85 €</span>
+          <span class="game-rating">★ 4.9</span>
+        </div>
+      </div>
+      <span class="play-btn">Jetzt spielen &amp; verdienen</span>
+    </a>
+
+    <!-- Domino Dreams -->
+    <a href="#" class="game-card" data-link="true">
+      <div class="game-img-wrap">
+        <img src="https://play-lh.googleusercontent.com/KPBcFtNGNn3cMtgFthtbrWL0COVs5bINj1aQYniBa6JxgI-FAkce2czhVONttEtLQXnfd0X5rHA6YGMHp3nfWw" alt="Domino Dreams" loading="lazy">
+        <span class="game-badge">TOP</span>
+      </div>
+      <div class="game-info">
+        <h3>Domino Dreams</h3>
+        <div class="sub-green">Direkt spielbar ohne Freischaltung</div>
+        <div class="bis">BIS ZU</div>
+        <div class="game-price-row">
+          <span class="game-price">90,00 €</span>
+          <span class="game-rating">★ 4.8</span>
+        </div>
+      </div>
+      <span class="play-btn">Jetzt spielen &amp; verdienen</span>
+    </a>
+
+    <!-- Subway Surfers -->
+    <a href="#" class="game-card" data-link="true">
+      <div class="game-img-wrap">
+        <img src="https://img.poki-cdn.com/cdn-cgi/image/q=78,scq=50,width=1200,height=1200,fit=cover,f=png/1c920b9279c2bedec567c1b58129ae8f/subway-surfers-logo.png" alt="Subway Surfers City" loading="lazy">
+        <span class="game-time-badge">1 Std.</span>
+      </div>
+      <div class="game-info">
+        <h3>Subway Surfers City</h3>
+        <div class="sub">Pro Spielstunde</div>
+        <div class="bis">BIS ZU</div>
+        <div class="game-price-row">
+          <span class="game-price">12,50 €</span>
+          <span class="game-rating">★ 5.0</span>
+        </div>
+      </div>
+      <span class="play-btn">Jetzt spielen &amp; verdienen</span>
+    </a>
+  </div>
+
+  <p class="unlock-notice">🔒 Spiele die Games um die <a href="#">Top Angebote</a> freizuschalten</p>
+
+  <!-- Steps -->
+  <div class="steps-label">SO FÄNGST DU AN · NUR 3 SCHRITTE</div>
+
+  <div class="step-card">
+    <div class="step-num">1</div>
+    <h3>App herunterladen</h3>
+    <p>Lade die App kostenlos herunter und erstelle dein Konto in 30 Sekunden.</p>
+    <span class="step-tag green">🎁 Kostenlos</span>
+  </div>
+
+  <div class="step-card">
+    <div class="step-num">2</div>
+    <h3>Spiele deine Lieblingsgames</h3>
+    <p>Je mehr du spielst, desto höhere Belohnungen schaltest du frei.</p>
+    <span class="step-tag pink">🔥 Beliebt</span>
+  </div>
+
+  <div class="step-card">
+    <div class="step-num">3</div>
+    <h3>Geld auszahlen lassen</h3>
+    <p>PayPal, Banküberweisung, Krypto oder Geschenkkarten. Du wählst.</p>
+  </div>
+
+  <!-- Reviews -->
+  <div class="reviews-label">ECHTE AUSZAHLUNGEN · ECHTE NUTZER</div>
+  <h2 class="reviews-title">Über <span class="pink-bold">47.832 Nutzer</span> verdienen bereits</h2>
+
+  <div class="review-card">
+    <div class="review-header">
+      <div class="review-author">
+        <div class="avatar lm">LM</div>
+        <div class="author-info">
+          <div class="author-name">Lukas M. <span class="check">✔</span> <span style="font-size:12px;color:#999;font-weight:400">· Berlin</span></div>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-time">vor 2 Std.</div>
+        </div>
+      </div>
+      <div class="review-amount">+23,40 €</div>
+    </div>
+    <div class="review-text">Block Blast hat sich wirklich ausgezahlt. Nach 4 Stunden spielen in meiner ersten Woche hatte ich 23,40 € auf meinem PayPal.</div>
+  </div>
+
+  <div class="review-card">
+    <div class="review-header">
+      <div class="review-author">
+        <div class="avatar sk">SK</div>
+        <div class="author-info">
+          <div class="author-name">Sarah K. <span class="check">✔</span> <span style="font-size:12px;color:#999;font-weight:400">· München</span></div>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-time">vor 5 Std.</div>
+        </div>
+      </div>
+      <div class="review-amount">+31,80 €</div>
+    </div>
+    <div class="review-text">Ich spiele Domino Dreams sowieso jeden Tag. Dass ich dafür auch noch 31,80 € im ersten Monat bekomme, hätte ich nicht erwartet.</div>
+  </div>
+
+  <div class="review-card">
+    <div class="review-header">
+      <div class="review-author">
+        <div class="avatar tr">TR</div>
+        <div class="author-info">
+          <div class="author-name">Thomas R. <span class="check">✔</span> <span style="font-size:12px;color:#999;font-weight:400">· Hamburg</span></div>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-time">vor 1 Tag</div>
+        </div>
+      </div>
+      <div class="review-amount">+18,00 €</div>
+    </div>
+    <div class="review-text">Clash Royale gehört für mich zum Alltag. 18 € in 3 Tagen. Die PayPal Zahlung war sofort da.</div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq-label">HÄUFIGE FRAGEN</div>
+  <h2 class="faq-title">Alles was du <em>wissen musst</em></h2>
+
+  <div class="faq-item">
+    <div class="faq-q">Ist das wirklich kostenlos? <span class="icon">+</span></div>
+    <div class="faq-a">Ja, vollständig. Du zahlst nichts und gibst keine Kreditkarte an. Du lädst die App herunter, spielst, und wirst bezahlt.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Wann bekomme ich mein Geld? <span class="icon">+</span></div>
+    <div class="faq-a">Auszahlungen werden in der Regel innerhalb von 24–72 Stunden bearbeitet. PayPal-Zahlungen sind oft sofort verfügbar.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Welche Spiele muss ich spielen? <span class="icon">+</span></div>
+    <div class="faq-a">Du kannst frei wählen. Block Blast, Clash Royale, Domino Dreams und Subway Surfers City sind aktuell die beliebtesten und höchst bezahlten Spiele.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Wie viel kann ich verdienen? <span class="icon">+</span></div>
+    <div class="faq-a">Das hängt davon ab, wie viel Zeit du investierst und welche Angebote du abschließt. Manche Nutzer verdienen bis zu 90 € im Monat.</div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>© 2025 Empfohlen. Alle Rechte vorbehalten.</p>
+    <p style="margin-top:6px">Die angezeigten Verdienstmöglichkeiten sind Schätzungen und keine Garantien.</p>
+  </div>
+
+</div>
+
+<script>
+  // ── Countdown timer (15 min, resets on expiry) ──
+  (function() {
+    const KEY = 'bonus_expiry';
+    let expiry = parseInt(sessionStorage.getItem(KEY) || '0');
+    if (!expiry || expiry < Date.now()) {
+      expiry = Date.now() + 15 * 60 * 1000;
+      sessionStorage.setItem(KEY, expiry);
+    }
+    const el = document.getElementById('timer');
+    function tick() {
+      const diff = Math.max(0, expiry - Date.now());
+      const m = Math.floor(diff / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      el.textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+      if (diff === 0) {
+        expiry = Date.now() + 15 * 60 * 1000;
+        sessionStorage.setItem(KEY, expiry);
+      }
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
+
+  // ── Affiliate link with sub param forwarding ──
+  function buildLink() {
+    const base = 'https://www.phef6trk.com/QZ85XF/2K4X81C/';
+    const params = new URLSearchParams(window.location.search);
+    const fwd = new URLSearchParams();
+    ['sub1','sub2','sub3','sub4','sub5'].forEach(k => {
+      if (params.has(k)) fwd.set(k, params.get(k));
+    });
+    const qs = fwd.toString();
+    return qs ? base + '?' + qs : base;
+  }
+
+  const link = buildLink();
+  document.getElementById('main-cta').href = link;
+  document.querySelectorAll('[data-link="true"]').forEach(el => { el.href = link; });
+
+  // ── FAQ accordion ──
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+</script>
+</body>
+</html>
