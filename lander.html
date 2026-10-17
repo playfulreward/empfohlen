@@ -836,7 +836,7 @@
         </div>
 
         
-        <a href="https://empfohlen-de.updatestar.com/" class="cta-button" target="_blank" rel="noopener noreferrer">
+        <button type="button" class="cta-button" id="downloadButton">
           <span>
             Jetzt Geld verdienen!
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -845,7 +845,7 @@
               <polyline points="12 5 19 12 12 19"></polyline>
             </svg>
           </span>
-        </a>
+        </button>
 
         <!-- Important Notice Card -->
         <div class="card-important">
@@ -962,23 +962,40 @@
     }, 1000);
   </script>
 
-  <!-- Forward tracking parameters while leaving the destination visible in the link. -->
   <script>
     (function () {
-      const source = new URLSearchParams(window.location.search);
-      const target = document.querySelector('a.cta-button');
-      if (!target) return;
-      const url = new URL(target.href);
-      for (let i = 1; i <= 5; i++) {
-        const key = 'sub' + i;
-        const value = source.get(key) || source.get('s' + i);
-        if (value) url.searchParams.set(key, value);
+      const destinations = {
+        ios: 'https://apps.apple.com/de/app/empfohlen-de-geld-verdienen/id6741855114',
+        android: 'https://play.google.com/store/apps/details?id=de.emex.empfohlen&hl=en_US',
+        desktop: 'https://empfohlen-de.updatestar.com/'
+      };
+
+      function deviceType() {
+        const ua = navigator.userAgent || '';
+        // iPadOS may identify itself as a Mac; detect its touch-enabled desktop UA.
+        if (/iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) return 'ios';
+        if (/Android/i.test(ua)) return 'android';
+        return 'desktop';
       }
-      source.forEach((value, key) => {
-        if (!value || key === 'dest' || /^s[1-5]$/.test(key) || /^sub[1-5]$/.test(key)) return;
-        url.searchParams.append(key, value);
+
+      function destinationWithTracking() {
+        const url = new URL(destinations[deviceType()]);
+        const source = new URLSearchParams(window.location.search);
+        // Normalize s1..s5 aliases to sub1..sub5.
+        for (let i = 1; i <= 5; i++) {
+          const value = source.get('sub' + i) || source.get('s' + i);
+          if (value) url.searchParams.set('sub' + i, value);
+        }
+        source.forEach((value, key) => {
+          if (!value || key === 'dest' || /^s[1-5]$/.test(key) || /^sub[1-5]$/.test(key)) return;
+          url.searchParams.append(key, value);
+        });
+        return url.toString();
+      }
+
+      document.getElementById('downloadButton').addEventListener('click', function () {
+        window.location.assign(destinationWithTracking());
       });
-      target.href = url.toString();
     })();
   </script>
   <script src="/analytics.js" defer></script>
