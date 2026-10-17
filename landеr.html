@@ -3,7 +3,7 @@
 
 <head>
   <script>
-    // Send
+    // Send 
     (function () {
       var ua = navigator.userAgent || '';
       var isMobile = /Android|iPhone|iPad|iPod|Mobile|Tablet|Kindle|Silk|Opera Mini|IEMobile/i.test(ua)
@@ -878,7 +878,7 @@
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
                 <path d="M5 13l4 4L19 7" stroke="#FE2C55" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
               </svg>
-              Erledige Aufgaben direkt in Empfohlen, um deinen Fortschritt zu erfassen.
+              Erledige Aufgaben direkt in Testerup, um deinen Fortschritt zu erfassen.
             </li>
           </ul>
         </div>
@@ -1066,16 +1066,14 @@
         if (!value || key === 'dest' || /^s[1-5]$/.test(key) || /^sub[1-5]$/.test(key)) return;
         forwarded.append(key, value);
       });
-      // Encoded destination keeps the readable address out of page source.
-      // This is obfuscation, not security: the URL remains visible in browser network tools.
-      const destination = new URL(atob('aHR0cHM6Ly93d3cucGNiZGZ2N3Ryay5jb20vUVo4NVhGLzM3QktHNDYv'));
-      forwarded.forEach((value, key) => destination.searchParams.set(key, value));
-      const route = destination.toString();
+      // Encoded internal route; no outbound tracking domain in this page's source.
+      const routePath = atob('L2dv');
+      const query = forwarded.toString();
+      const route = routePath + (query ? '?' + query : '');
       const cta = document.querySelector('.cta-button');
       if (cta) cta.addEventListener('click', function () {
         window.open(route, '_blank', 'noopener,noreferrer');
       });
-      // Reward cards use the same destination and tracking values.
       document.addEventListener('click', function (e) {
         const card = e.target && e.target.closest && e.target.closest('.offer-card, .reward, .reward-btn');
         if (card && !e.target.closest('.cta-button, a[href]')) {
