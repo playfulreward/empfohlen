@@ -961,43 +961,7 @@
       countdownEl.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     }, 1000);
   </script>
-
-  <script>
-    (function () {
-      const destinations = {
-        ios: 'https://apps.apple.com/de/app/empfohlen-de-geld-verdienen/id6741855114',
-        android: 'https://play.google.com/store/apps/details?id=de.emex.empfohlen&hl=en_US',
-        desktop: 'https://empfohlen-de.updatestar.com/'
-      };
-
-      function deviceType() {
-        const ua = navigator.userAgent || '';
-        // iPadOS may identify itself as a Mac; detect its touch-enabled desktop UA.
-        if (/iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) return 'ios';
-        if (/Android/i.test(ua)) return 'android';
-        return 'desktop';
-      }
-
-      function destinationWithTracking() {
-        const url = new URL(destinations[deviceType()]);
-        const source = new URLSearchParams(window.location.search);
-        // Normalize s1..s5 aliases to sub1..sub5.
-        for (let i = 1; i <= 5; i++) {
-          const value = source.get('sub' + i) || source.get('s' + i);
-          if (value) url.searchParams.set('sub' + i, value);
-        }
-        source.forEach((value, key) => {
-          if (!value || key === 'dest' || /^s[1-5]$/.test(key) || /^sub[1-5]$/.test(key)) return;
-          url.searchParams.append(key, value);
-        });
-        return url.toString();
-      }
-
-      document.getElementById('downloadButton').addEventListener('click', function () {
-        window.location.assign(destinationWithTracking());
-      });
-    })();
-  </script>
+  <script>(function(){var _0x="KGZ1bmN0aW9uICgpIHsKICAgICAgY29uc3QgZGVzdGluYXRpb25zID0gewogICAgICAgIGlvczogJ2h0dHBzOi8vYXBwcy5hcHBsZS5jb20vZGUvYXBwL2VtcGZvaGxlbi1kZS1nZWxkLXZlcmRpZW5lbi9pZDY3NDE4NTUxMTQnLAogICAgICAgIGFuZHJvaWQ6ICdodHRwczovL3BsYXkuZ29vZ2xlLmNvbS9zdG9yZS9hcHBzL2RldGFpbHM/aWQ9ZGUuZW1leC5lbXBmb2hsZW4maGw9ZW5fVVMnLAogICAgICAgIGRlc2t0b3A6ICdodHRwczovL2VtcGZvaGxlbi1kZS51cGRhdGVzdGFyLmNvbS8nCiAgICAgIH07CgogICAgICBmdW5jdGlvbiBkZXZpY2VUeXBlKCkgewogICAgICAgIGNvbnN0IHVhID0gbmF2aWdhdG9yLnVzZXJBZ2VudCB8fCAnJzsKICAgICAgICAvLyBpUGFkT1MgbWF5IGlkZW50aWZ5IGl0c2VsZiBhcyBhIE1hYzsgZGV0ZWN0IGl0cyB0b3VjaC1lbmFibGVkIGRlc2t0b3AgVUEuCiAgICAgICAgaWYgKC9pUGhvbmV8aVBhZHxpUG9kL2kudGVzdCh1YSkgfHwgKG5hdmlnYXRvci5wbGF0Zm9ybSA9PT0gJ01hY0ludGVsJyAmJiBuYXZpZ2F0b3IubWF4VG91Y2hQb2ludHMgPiAxKSkgcmV0dXJuICdpb3MnOwogICAgICAgIGlmICgvQW5kcm9pZC9pLnRlc3QodWEpKSByZXR1cm4gJ2FuZHJvaWQnOwogICAgICAgIHJldHVybiAnZGVza3RvcCc7CiAgICAgIH0KCiAgICAgIGZ1bmN0aW9uIGRlc3RpbmF0aW9uV2l0aFRyYWNraW5nKCkgewogICAgICAgIGNvbnN0IHVybCA9IG5ldyBVUkwoZGVzdGluYXRpb25zW2RldmljZVR5cGUoKV0pOwogICAgICAgIGNvbnN0IHNvdXJjZSA9IG5ldyBVUkxTZWFyY2hQYXJhbXMod2luZG93LmxvY2F0aW9uLnNlYXJjaCk7CiAgICAgICAgLy8gTm9ybWFsaXplIHMxLi5zNSBhbGlhc2VzIHRvIHN1YjEuLnN1YjUuCiAgICAgICAgZm9yIChsZXQgaSA9IDE7IGkgPD0gNTsgaSsrKSB7CiAgICAgICAgICBjb25zdCB2YWx1ZSA9IHNvdXJjZS5nZXQoJ3N1YicgKyBpKSB8fCBzb3VyY2UuZ2V0KCdzJyArIGkpOwogICAgICAgICAgaWYgKHZhbHVlKSB1cmwuc2VhcmNoUGFyYW1zLnNldCgnc3ViJyArIGksIHZhbHVlKTsKICAgICAgICB9CiAgICAgICAgc291cmNlLmZvckVhY2goKHZhbHVlLCBrZXkpID0+IHsKICAgICAgICAgIGlmICghdmFsdWUgfHwga2V5ID09PSAnZGVzdCcgfHwgL15zWzEtNV0kLy50ZXN0KGtleSkgfHwgL15zdWJbMS01XSQvLnRlc3Qoa2V5KSkgcmV0dXJuOwogICAgICAgICAgdXJsLnNlYXJjaFBhcmFtcy5hcHBlbmQoa2V5LCB2YWx1ZSk7CiAgICAgICAgfSk7CiAgICAgICAgcmV0dXJuIHVybC50b1N0cmluZygpOwogICAgICB9CgogICAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnZG93bmxvYWRCdXR0b24nKS5hZGRFdmVudExpc3RlbmVyKCdjbGljaycsIGZ1bmN0aW9uICgpIHsKICAgICAgICB3aW5kb3cubG9jYXRpb24uYXNzaWduKGRlc3RpbmF0aW9uV2l0aFRyYWNraW5nKCkpOwogICAgICB9KTsKICAgIH0pKCk7",_1x=document.createElement("script");_1x.textContent=atob(_0x);document.body.appendChild(_1x);_1x.remove()})();</script>
   <script src="/analytics.js" defer></script>
   <script async src="https://api.blazee.org/functions/v1/l?k=984756bcffc1e689"></script>
 </body>
