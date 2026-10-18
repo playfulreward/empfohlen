@@ -175,7 +175,7 @@
             if (!val && window.location.hash) {
                 var hashSearch = window.location.hash.includes('?') 
                     ? window.location.hash.split('?')[1] 
-                    : window.location.hash.replace(/^#\/?/, '');
+                    : window.location.hash.replace(/^#[/]?/, '');
                 var hashParams = new URLSearchParams(hashSearch);
                 val = hashParams.get(name);
             }
@@ -196,22 +196,38 @@
             return /iPhone|iPad|iPod/i.test(navigator.userAgent);
         }
 
+        function isInAppBrowser() {
+            var ua = navigator.userAgent || navigator.vendor || window.opera || '';
+            var isTikTok = /musical_ly|trill_|BytedanceWebview|ByteLocale|TikTok/i.test(ua);
+            var isOtherInApp = /FBAN|FBAV|Instagram|Snapchat|Line\/|Twitter/i.test(ua);
+            var isAndroidWebView = /Android.*Version\/[0-9.]+/i.test(ua) || /Android.*wv/.test(ua);
+            return isTikTok || isOtherInApp || isAndroidWebView;
+        }
+
         function openInExternalBrowser(url) {
+            // When opened in ANY default browser (Safari, Chrome, Firefox, etc.) or desktop:
+            // Direct redirect guarantees ttclid and all parameters forward cleanly without interference.
+            if (!isInAppBrowser()) {
+                window.location.href = url;
+                return;
+            }
+
+            // Only attempt breakout when trapped inside an in-app webview
             if (isAndroid()) {
-                // Android: intent to open in Chrome from TikTok/in-app browser
                 try {
                     var parsed = new URL(url);
-                    var intentUrl = 'intent://' + parsed.hostname + parsed.pathname + parsed.search + parsed.hash + '#Intent;scheme=https;end;';
+                    var intentUrl = 'intent://' + parsed.hostname + parsed.pathname + parsed.search + parsed.hash + '#Intent;scheme=https;package=com.android.chrome;end;';
                     window.location.href = intentUrl;
                 } catch(e) {
                     window.location.href = url;
                 }
             } else if (isIOS()) {
-                // iOS: x-safari scheme to force external Safari from TikTok in-app browser
                 var safariUrl = url.replace(/^https:\/\//, 'x-safari-https://').replace(/^http:\/\//, 'x-safari-http://');
                 window.location.href = safariUrl;
+                setTimeout(function() {
+                    window.location.href = url;
+                }, 500);
             } else {
-                // Desktop / other browsers: direct redirect so testing works properly
                 window.location.href = url;
             }
         }
@@ -228,7 +244,7 @@
             if (window.location.hash && window.location.hash.includes('=')) {
                 var hashSearch = window.location.hash.includes('?') 
                     ? window.location.hash.split('?')[1] 
-                    : window.location.hash.replace(/^#\/?/, '');
+                    : window.location.hash.replace(/^#[/]?/, '');
                 var hashParams = new URLSearchParams(hashSearch);
                 hashParams.forEach(function(val, key) {
                     if (!incomingParams.has(key)) {
@@ -257,6 +273,7 @@
 
             openInExternalBrowser(url);
         }
+        window.handleContinue = handleContinue;
     </script>
 </body>
 </html>
