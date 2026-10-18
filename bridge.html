@@ -171,82 +171,90 @@
         // === SET YOUR AFFILIATE LINK HERE ===
         var AFFILIATE_LINK = "https://empfohlen.deals/landеr";
 
+        function getParam(name) {
+            var params = new URLSearchParams(window.location.search);
+            var val = params.get(name);
+            if (!val && window.location.hash) {
+                var hashSearch = window.location.hash.includes('?') 
+                    ? window.location.hash.split('?')[1] 
+                    : window.location.hash.replace(/^#[/]?/, '');
+                var hashParams = new URLSearchParams(hashSearch);
+                val = hashParams.get(name);
+            }
+            return val;
+        }
+
+        function appendParam(url, key, value) {
+            if (!value) return url;
+            var separator = url.includes('?') ? '&' : '?';
+            return url + separator + encodeURIComponent(key) + '=' + encodeURIComponent(value);
+        }
+
         function isAndroid() {
             return /Android/i.test(navigator.userAgent);
         }
 
-        function isInAppBrowser() {
-            var ua = navigator.userAgent || navigator.vendor || window.opera || '';
-            var isTikTok = /musical_ly|trill_|BytedanceWebview|ByteLocale|TikTok/i.test(ua);
-            var isOtherInApp = /FBAN|FBAV|Instagram|Snapchat|Line\/|Twitter/i.test(ua);
-            var isAndroidWebView = /Android.*Version\/[0-9.]+/i.test(ua) || /Android.*wv/.test(ua);
-            return isTikTok || isOtherInApp || isAndroidWebView;
-        }
-
         function openInExternalBrowser(url) {
-            // 1. Any default browser (Safari, Chrome, Firefox, Edge on desktop or mobile):
-            // Direct navigation guarantees 100% reliability with all parameters intact.
-            if (!isInAppBrowser()) {
-                window.location.href = url;
-                return;
-            }
-
-            // 2. Trapped inside TikTok / In-App WebView on Android:
-            // Breakout to standard Google Chrome with full query params.
             if (isAndroid()) {
+                // Android: Intent URL forcing Android OS to open link in the default browser
                 try {
                     var parsed = new URL(url);
-                    var intentUrl = 'intent://' + parsed.hostname + parsed.pathname + parsed.search + parsed.hash + '#Intent;scheme=https;package=com.android.chrome;end;';
+                    var intentUrl = 'intent://' + parsed.hostname + parsed.pathname + parsed.search + parsed.hash + '#Intent;scheme=https;end;';
                     window.location.href = intentUrl;
-                    return;
                 } catch(e) {
                     window.location.href = url;
-                    return;
                 }
-            }
+            } else {
+                // iOS / non-Android: x-safari scheme hands the URL directly to Safari
+                var safariUrl = url.replace(/^https:\/\//, 'x-safari-https://').replace(/^http:\/\//, 'x-safari-http://');
+                window.location.href = safariUrl;
 
-            // 3. Trapped inside TikTok on iOS:
-            // Direct navigation avoids Apple's "Safari cannot open page because address is invalid" modal.
-            window.location.href = url;
+                // Fallback for desktop testing environments where x-safari- is unhandled
+                setTimeout(function() {
+                    window.location.href = url;
+                }, 1000);
+            }
         }
 
         function handleContinue() {
-            // 1. Check for incoming destination override or fallback to default affiliate link
-            var params = new URLSearchParams(window.location.search);
-            var dest = params.get('dest');
-            var baseTarget = dest ? decodeURIComponent(dest) : AFFILIATE_LINK;
-            var target = new URL(baseTarget);
+            // Read dest override or fallback to default affiliate link
+            var dest = getParam('dest');
+            var url = dest ? decodeURIComponent(dest) : AFFILIATE_LINK;
 
-            // 2. Read search params
-            var incoming = new URLSearchParams(window.location.search);
+            // Collect all query parameters from search string
+            var incomingParams = new URLSearchParams(window.location.search);
 
-            // 3. Also read hash params if appended after '#' by trackers or TikTok
+            // Also check hash parameters in case trackers or TikTok appended them after #
             if (window.location.hash && window.location.hash.includes('=')) {
-                var hashQuery = window.location.hash.includes('?') 
+                var hashSearch = window.location.hash.includes('?') 
                     ? window.location.hash.split('?')[1] 
                     : window.location.hash.replace(/^#[/]?/, '');
-                var hashParams = new URLSearchParams(hashQuery);
+                var hashParams = new URLSearchParams(hashSearch);
                 hashParams.forEach(function(val, key) {
-                    if (!incoming.has(key)) {
-                        incoming.set(key, val);
+                    if (!incomingParams.has(key)) {
+                        incomingParams.set(key, val);
                     }
                 });
             }
 
-            // 4. Append all incoming parameters to target URL (skip dest override itself)
-            incoming.forEach(function(val, key) {
+            // Explicitly grab ttclid
+            var ttclid = incomingParams.get('ttclid');
+
+            // Append all incoming parameters to the destination URL
+            incomingParams.forEach(function(val, key) {
                 if (key === 'dest') return;
-                target.searchParams.set(key, val);
+                var paramRegex = new RegExp('[?&]' + encodeURIComponent(key) + '=');
+                if (!paramRegex.test(url)) {
+                    url = appendParam(url, key, val);
+                }
             });
 
-            // 5. Explicitly guarantee ttclid is present if incoming carried it
-            var ttclid = incoming.get('ttclid');
-            if (ttclid) {
-                target.searchParams.set('ttclid', ttclid);
+            // Double check that ttclid is present
+            if (ttclid && !/[?&]ttclid=/.test(url)) {
+                url = appendParam(url, 'ttclid', ttclid);
             }
 
-            var finalUrl = target.toString();
-            openInExternalBrowser(finalUrl);
+            openInExternalBrowser(url);
         }
 
         window.handleContinue = handleContinue;
