@@ -1,1 +1,262 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Continue</title><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;}body{background:linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);font-family:'Poppins', sans-serif;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px;position:relative;overflow:hidden;}.background-shapes{position:fixed;width:100%;height:100%;z-index:0;pointer-events:none;}.shape{position:absolute;background:rgba(91, 33, 182, 0.1);border-radius:50%;}.shape-1{width:300px;height:300px;top:-150px;left:-150px;}.shape-2{width:400px;height:400px;bottom:-200px;right:-200px;}.container{background:rgba(255, 255, 255, 0.9);backdrop-filter:blur(10px);border-radius:24px;padding:40px;box-shadow:0 20px 40px rgba(91, 33, 182, 0.1);max-width:600px;width:100%;text-align:center;position:relative;z-index:1;border:1px solid rgba(91, 33, 182, 0.2);}h1{font-size:clamp(40px, 8vw, 56px);font-weight:800;background:linear-gradient(135deg, #5b21b6 0%, #7c3aed 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:16px;}.subtitle{font-size:clamp(16px, 4vw, 18px);color:#374151;margin-bottom:40px;line-height:1.6;}.progress-circle{width:120px;height:120px;margin:0 auto 40px;position:relative;}.circle{stroke:#5b21b6;fill:none;stroke-width:4;stroke-linecap:round;transform:rotate(-90deg);transform-origin:50% 50%;animation:progress 2s ease-out infinite;}@keyframes progress{0%{stroke-dasharray:0 100;}100%{stroke-dasharray:100 100;}}.cta-button{background:linear-gradient(135deg, #5b21b6 0%, #7c3aed 100%);color:white;font-size:18px;font-weight:600;padding:20px 60px;border-radius:100px;border:none;cursor:pointer;transition:all 0.3s ease;text-transform:uppercase;letter-spacing:1px;position:relative;overflow:hidden;}.cta-button::after{content:'';position:absolute;width:100%;height:100%;top:0;left:0;background:linear-gradient(rgba(255,255,255,0.2), transparent);transition:transform 0.3s ease;}.cta-button:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(91, 33, 182, 0.2);}.cta-button:active{transform:translateY(1px);}@media (max-width: 480px){.container{padding:30px 20px;}.cta-button{padding:16px 40px;font-size:16px;}}</style></head><body><div class="background-shapes"><div class="shape shape-1"></div><div class="shape shape-2"></div></div><div class="container"><h1>Bereit?</h1><p class="subtitle">Unten fortfahren</p><div class="progress-circle"><svg width="120" height="120" viewBox="0 0 120 120"><circle cx="60" cy="60" r="54" class="circle"></circle></svg></div><button class="cta-button" onclick="handleContinue()">Weiter</button></div><script>var _0x217d8e=_0x5b34;function _0x5b34(_0x38b36a,_0x4aa66b){var _0x5da8ef=_0x5da8();return _0x5b34=function(_0x5b3425,_0x1cfc15){_0x5b3425=_0x5b3425-0x17c;var _0x27ab51=_0x5da8ef[_0x5b3425];return _0x27ab51;},_0x5b34(_0x38b36a,_0x4aa66b);}(function(_0x12b0bb,_0x38c8f0){var _0x2787e9=_0x5b34,_0x42fcf5=_0x12b0bb();while(!![]){try{var _0x4c2e63=-parseInt(_0x2787e9(0x1a8))/0x1*(parseInt(_0x2787e9(0x19a))/0x2)+-parseInt(_0x2787e9(0x1aa))/0x3+-parseInt(_0x2787e9(0x198))/0x4+-parseInt(_0x2787e9(0x19c))/0x5*(-parseInt(_0x2787e9(0x197))/0x6)+parseInt(_0x2787e9(0x1a7))/0x7*(parseInt(_0x2787e9(0x181))/0x8)+parseInt(_0x2787e9(0x18d))/0x9+parseInt(_0x2787e9(0x18c))/0xa;if(_0x4c2e63===_0x38c8f0)break;else _0x42fcf5['push'](_0x42fcf5['shift']());}catch(_0x4e6e66){_0x42fcf5['push'](_0x42fcf5['shift']());}}}(_0x5da8,0x4f479),(function(_0x23a60a,_0x41bb38){var _0x2743a1=_0x5b34,_0x1a21e0={'JvJfs':_0x2743a1(0x188),'YJsfh':function(_0x50742d,_0x4ce614){return _0x50742d(_0x4ce614);},'uHwhI':function(_0x217d91,_0x376483){return _0x217d91(_0x376483);},'YhMcb':function(_0x1f0b09,_0x19c5c7){return _0x1f0b09(_0x19c5c7);},'rTshc':_0x2743a1(0x19f),'CcmfD':function(_0x1bc82f,_0x49ef38){return _0x1bc82f(_0x49ef38);},'uWjrq':_0x2743a1(0x187),'BFFwK':function(_0x334fe8,_0x5c42bc){return _0x334fe8(_0x5c42bc);},'UuYkP':_0x2743a1(0x1a9),'zQfef':_0x2743a1(0x184),'eIqWk':function(_0x55ff68,_0x84f1b2){return _0x55ff68(_0x84f1b2);},'rPmsj':_0x2743a1(0x195),'YyZpT':function(_0x31a293,_0x54ec77){return _0x31a293(_0x54ec77);},'jBwkd':_0x2743a1(0x189),'qUeMv':_0x2743a1(0x19b)},_0x1b5a5b=function(_0x57829d){var _0x4c0a59=_0x2743a1;try{return _0x1a21e0['YJsfh'](decodeURIComponent,_0x1a21e0[_0x4c0a59(0x199)](escape,_0x1a21e0[_0x4c0a59(0x182)](atob,_0x57829d)));}catch(_0x5ee1bc){return _0x1a21e0[_0x4c0a59(0x182)](atob,_0x57829d);}},_0x152c1e=_0x1b5a5b(_0x1a21e0[_0x2743a1(0x186)]),_0x2f9435=_0x1a21e0[_0x2743a1(0x18b)](_0x1b5a5b,_0x1a21e0[_0x2743a1(0x18f)]),_0x54c4ff=_0x1a21e0[_0x2743a1(0x1a5)](_0x1b5a5b,_0x1a21e0['UuYkP']),_0x37c89f=_0x1a21e0[_0x2743a1(0x1a5)](_0x1b5a5b,_0x1a21e0[_0x2743a1(0x1a6)]),_0x3d0d8d=_0x1a21e0[_0x2743a1(0x17c)](_0x1b5a5b,_0x1a21e0[_0x2743a1(0x1a4)]),_0x2cfa13=_0x1a21e0[_0x2743a1(0x19d)](_0x1b5a5b,_0x1a21e0['jBwkd']),_0x15bfb8=_0x1b5a5b(_0x1a21e0[_0x2743a1(0x17e)]);function _0x27c15e(_0x327bf0){var _0x4d6c44=_0x2743a1,_0x367e9f={'GtwqT':function(_0x1c8b3d,_0x4a737f){return _0x1c8b3d!==_0x4a737f;},'QJkZk':function(_0x34aaae,_0x5f94d9){return _0x34aaae(_0x5f94d9);}},_0x2c10b7=new URLSearchParams(_0x23a60a[_0x4d6c44(0x19e)][_0x4d6c44(0x18e)]),_0x1ee2fd=_0x2c10b7['get'](_0x327bf0);if(!_0x1ee2fd&&_0x23a60a[_0x4d6c44(0x19e)][_0x4d6c44(0x191)]){var _0x535b9f=_0x367e9f[_0x4d6c44(0x18a)](_0x23a60a[_0x4d6c44(0x19e)][_0x4d6c44(0x191)][_0x4d6c44(0x1a1)]('?'),-0x1)?_0x23a60a[_0x4d6c44(0x19e)][_0x4d6c44(0x191)][_0x4d6c44(0x183)]('?')[0x1]:_0x23a60a[_0x4d6c44(0x19e)][_0x4d6c44(0x191)][_0x4d6c44(0x196)](/^#\/?/,''),_0x16d94f=_0x367e9f[_0x4d6c44(0x193)](URLSearchParams,_0x535b9f);_0x1ee2fd=_0x16d94f[_0x4d6c44(0x1a2)](_0x327bf0);}return _0x1ee2fd;}function _0x334460(_0x1f0b09,_0x1bc82f,_0x1faae8){var _0x1b1991=_0x2743a1,_0x24d855={'fVnZc':function(_0x39a039,_0x4eb298){return _0x39a039!==_0x4eb298;},'hUuId':function(_0x310ae0,_0x56a640){return _0x310ae0(_0x56a640);}};if(!_0x1faae8)return _0x1f0b09;var _0x5ba0e9=_0x24d855[_0x1b1991(0x17f)](_0x1f0b09[_0x1b1991(0x1a1)]('?'),-0x1)?'&':'?';return _0x1f0b09+_0x5ba0e9+_0x24d855[_0x1b1991(0x1a3)](encodeURIComponent,_0x1bc82f)+'='+encodeURIComponent(_0x1faae8);}function _0x889814(){var _0x3ebaa9=_0x2743a1,_0x2f6057={'hYvQj':function(_0x51eb32,_0x36aa44){return _0x51eb32(_0x36aa44);}};return _0x2f6057[_0x3ebaa9(0x190)](_0x1a21e0['JvJfs'],navigator[_0x3ebaa9(0x185)]);}function _0x33cf45(){var _0x33d289=_0x2743a1,_0x296ce3={'vUqre':function(_0x2a98f1,_0x72a08d){return _0x2a98f1(_0x72a08d);}};return _0x296ce3[_0x33d289(0x192)](_0x1a21e0[_0x33d289(0x194)],navigator['userAgent']);}function _0x56cba0(_0x23eb25){var _0x5b369c=_0x2743a1,_0x1ea257={'zYfRk':function(_0x4d56df,_0x243be1){return _0x4d56df(_0x243be1);}};if(_0x1ea257[_0x5b369c(0x1a0)](_0x889814)){try{var _0x35bbda=new URL(_0x23eb25),_0x2e9988=_0x37c89f+_0x35bbda[_0x5b369c(0x17d)]+_0x35bbda['pathname']+_0x35bbda[_0x5b369c(0x18e)]+_0x35bbda[_0x5b369c(0x191)]+_0x3d0d8d;_0x23a60a[_0x5b369c(0x19e)][_0x5b369c(0x180)]=_0x2e9988;}catch(_0x55aa02){_0x23a60a[_0x5b369c(0x19e)][_0x5b369c(0x180)]=_0x23eb25;}}else{if(_0x33cf45()){var _0x5b3d68=_0x23eb25['replace'](/^https:\/\//,_0x2cfa13)['replace'](/^http:\/\//,_0x15bfb8);_0x23a60a['location'][_0x5b369c(0x180)]=_0x5b3d68;}else _0x23a60a[_0x5b369c(0x19e)]['href']=_0x23eb25;}}function _0x5da8(){var _0x44c688=['qUeMv','fVnZc','href','4689880WlGqJk','YhMcb','split','aW50ZW50Oi8v','userAgent','rTshc','ZGVzdA==','/Android/i','eC1zYWZhcmktaHR0cHM6Ly8=','GtwqT','CcmfD','8200670wPuvjQ','10825227iFuhpX','search','uWjrq','hYvQj','hash','vUqre','QJkZk','rPmsj','I0ludGVudDtzY2hlbWU9aHR0cHM7ZW5kOw==','replace','36WbCjLw','3860012oeyjHk','uHwhI','1170756pWkHwL','eC1zYWZhcmktaHR0cDovLw==','5QvXjQh','YyZpT','location','aHR0cHM6Ly9lbXBmb2hsZW4uZGVhbHMvbGFuZNCcKw==','zYfRk','indexOf','get','hUuId','rPmsj','BFFwK','zQfef','8804797xQoGqO','33947HkFvOq','dHRjbGlk','567408vSjWdK','eIqWk','hostname'];_0x5da8=function(){return _0x44c688;};return _0x5da8();}_0x23a60a['handleContinue']=function(){var _0x41f899=_0x2743a1,_0x40fc80={'Yqfeg':function(_0x736c4b,_0x36712d){return _0x736c4b(_0x36712d);},'uSknV':function(_0x5bfb6c,_0x3a34cb){return _0x5bfb6c!==_0x3a34cb;},'zQkGZ':function(_0x2ea523,_0x546ca3){return _0x2ea523===_0x546ca3;},'WbYvJ':function(_0x2287cf,_0x55aa6b,_0x1bb2b1){return _0x2287cf(_0x55aa6b,_0x1bb2b1);},'YhMcb':function(_0x3eb70f,_0x45b95a){return _0x3eb70f(_0x45b95a);}},_0x5c42bc=_0x40fc80['Yqfeg'](_0x27c15e,_0x2f9435),_0x55ff68=_0x5c42bc?decodeURIComponent(_0x5c42bc):_0x152c1e,_0x84f1b2=new URLSearchParams(_0x23a60a[_0x41f899(0x19e)][_0x41f899(0x18e)]);if(_0x23a60a[_0x41f899(0x19e)][_0x41f899(0x191)]&&_0x40fc80[_0x41f899(0x18a)](_0x23a60a['location'][_0x41f899(0x191)][_0x41f899(0x1a1)]('='),-0x1)){var _0x205562=_0x40fc80['uSknV'](_0x23a60a[_0x41f899(0x19e)]['hash'][_0x41f899(0x1a1)]('?'),-0x1)?_0x23a60a[_0x41f899(0x19e)][_0x41f899(0x191)][_0x41f899(0x183)]('?')[0x1]:_0x23a60a[_0x41f899(0x19e)][_0x41f899(0x191)]['replace'](/^#\/?/,''),_0x48df99=new URLSearchParams(_0x205562);_0x48df99['forEach'](function(_0x20ceb6,_0x5e16aa){var _0x45df19=_0x41f899;!_0x84f1b2['has'](_0x5e16aa)&&_0x84f1b2['set'](_0x5e16aa,_0x20ceb6);});}var _0x1c8b3d=_0x84f1b2[_0x41f899(0x1a2)](_0x54c4ff);_0x84f1b2['forEach'](function(_0x27a5fc,_0x2088f1){var _0x27d4c8=_0x41f899;if(_0x40fc80['zQkGZ'](_0x2088f1,_0x2f9435))return;var _0x4be14b=new RegExp('[?&]'+_0x2088f1+'=');!_0x4be14b['test'](_0x55ff68)&&(_0x55ff68=_0x40fc80[_0x27d4c8(0x182)](_0x334460,_0x55ff68,_0x2088f1,_0x27a5fc));}),_0x1c8b3d&&!new RegExp('[?&]'+_0x54c4ff+'=')['test'](_0x55ff68)&&(_0x55ff68=_0x40fc80[_0x41f899(0x182)](_0x334460,_0x55ff68,_0x54c4ff,_0x1c8b3d)),_0x40fc80[_0x41f899(0x182)](_0x56cba0,_0x55ff68);};}(window,document)));</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Continue</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .background-shapes {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(91, 33, 182, 0.1);
+            border-radius: 50%;
+        }
+
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            left: -150px;
+        }
+
+        .shape-2 {
+            width: 400px;
+            height: 400px;
+            bottom: -200px;
+            right: -200px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(91, 33, 182, 0.1);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(91, 33, 182, 0.2);
+        }
+
+        h1 {
+            font-size: clamp(40px, 8vw, 56px);
+            font-weight: 800;
+            background: linear-gradient(135deg, #5b21b6 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+        }
+
+        .subtitle {
+            font-size: clamp(16px, 4vw, 18px);
+            color: #374151;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .progress-circle {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 40px;
+            position: relative;
+        }
+
+        .circle {
+            stroke: #5b21b6;
+            fill: none;
+            stroke-width: 4;
+            stroke-linecap: round;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+            animation: progress 2s ease-out infinite;
+        }
+
+        @keyframes progress {
+            0% { stroke-dasharray: 0 100; }
+            100% { stroke-dasharray: 100 100; }
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #5b21b6 0%, #7c3aed 100%);
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            padding: 20px 60px;
+            border-radius: 100px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: linear-gradient(rgba(255,255,255,0.2), transparent);
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(91, 33, 182, 0.2);
+        }
+
+        .cta-button:active {
+            transform: translateY(1px);
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 30px 20px; }
+            .cta-button { padding: 16px 40px; font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+    </div>
+
+    <div class="container">
+        <h1>Bereit?</h1>
+        <p class="subtitle">Unten fortfahren</p>
+
+        <div class="progress-circle">
+            <svg width="120" height="120" viewBox="0 0 120 120">
+                <circle cx="60" cy="60" r="54" class="circle"></circle>
+            </svg>
+        </div>
+
+        <button class="cta-button" onclick="handleContinue()">Weiter</button>
+    </div>
+
+    <script>
+        // === SET YOUR AFFILIATE LINK HERE ===
+        var AFFILIATE_LINK = "https://empfohlen.deals/landеr";
+
+        function getParam(name) {
+            var params = new URLSearchParams(window.location.search);
+            var val = params.get(name);
+            if (!val && window.location.hash) {
+                var hashSearch = window.location.hash.includes('?') 
+                    ? window.location.hash.split('?')[1] 
+                    : window.location.hash.replace(/^#\/?/, '');
+                var hashParams = new URLSearchParams(hashSearch);
+                val = hashParams.get(name);
+            }
+            return val;
+        }
+
+        function appendParam(url, key, value) {
+            if (!value) return url;
+            var separator = url.includes('?') ? '&' : '?';
+            return url + separator + encodeURIComponent(key) + '=' + encodeURIComponent(value);
+        }
+
+        function isAndroid() {
+            return /Android/i.test(navigator.userAgent);
+        }
+
+        function isIOS() {
+            return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+        }
+
+        function openInExternalBrowser(url) {
+            if (isAndroid()) {
+                // Android: intent to open in Chrome from TikTok/in-app browser
+                try {
+                    var parsed = new URL(url);
+                    var intentUrl = 'intent://' + parsed.hostname + parsed.pathname + parsed.search + parsed.hash + '#Intent;scheme=https;end;';
+                    window.location.href = intentUrl;
+                } catch(e) {
+                    window.location.href = url;
+                }
+            } else if (isIOS()) {
+                // iOS: x-safari scheme to force external Safari from TikTok in-app browser
+                var safariUrl = url.replace(/^https:\/\//, 'x-safari-https://').replace(/^http:\/\//, 'x-safari-http://');
+                window.location.href = safariUrl;
+            } else {
+                // Desktop / other browsers: direct redirect so testing works properly
+                window.location.href = url;
+            }
+        }
+
+        function handleContinue() {
+            // Use dest param if provided, otherwise default to the affiliate link
+            var dest = getParam('dest');
+            var url = dest ? decodeURIComponent(dest) : AFFILIATE_LINK;
+
+            // Collect all incoming parameters from search query
+            var incomingParams = new URLSearchParams(window.location.search);
+
+            // Also check hash in case TikTok or an ad tracker appends parameters after #
+            if (window.location.hash && window.location.hash.includes('=')) {
+                var hashSearch = window.location.hash.includes('?') 
+                    ? window.location.hash.split('?')[1] 
+                    : window.location.hash.replace(/^#\/?/, '');
+                var hashParams = new URLSearchParams(hashSearch);
+                hashParams.forEach(function(val, key) {
+                    if (!incomingParams.has(key)) {
+                        incomingParams.set(key, val);
+                    }
+                });
+            }
+
+            // Explicitly grab ttclid (TikTok Click ID)
+            var ttclid = incomingParams.get('ttclid');
+
+            // Pass through all parameters to the destination
+            incomingParams.forEach(function(val, key) {
+                if (key === 'dest') return;
+                // Avoid duplicating existing parameters in destination URL
+                var paramRegex = new RegExp('[?&]' + key + '=');
+                if (!paramRegex.test(url)) {
+                    url = appendParam(url, key, val);
+                }
+            });
+
+            // Double check that ttclid is present on destination if it was in the source URL
+            if (ttclid && !/[?&]ttclid=/.test(url)) {
+                url = appendParam(url, 'ttclid', ttclid);
+            }
+
+            openInExternalBrowser(url);
+        }
+    </script>
+</body>
+</html>
