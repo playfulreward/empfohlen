@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -172,22 +171,34 @@
 
         function getParam(name) {
             var params = new URLSearchParams(window.location.search);
-            return params.get(name);
+            var val = params.get(name);
+            if (!val && window.location.hash) {
+                var hashSearch = window.location.hash.includes('?') 
+                    ? window.location.hash.split('?')[1] 
+                    : window.location.hash.replace(/^#\/?/, '');
+                var hashParams = new URLSearchParams(hashSearch);
+                val = hashParams.get(name);
+            }
+            return val;
         }
 
         function appendParam(url, key, value) {
             if (!value) return url;
             var separator = url.includes('?') ? '&' : '?';
-            return url + separator + key + '=' + encodeURIComponent(value);
+            return url + separator + encodeURIComponent(key) + '=' + encodeURIComponent(value);
         }
 
         function isAndroid() {
             return /Android/i.test(navigator.userAgent);
         }
 
+        function isIOS() {
+            return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+        }
+
         function openInExternalBrowser(url) {
             if (isAndroid()) {
-                // Android: intent to open in Chrome
+                // Android: intent to open in Chrome from TikTok/in-app browser
                 try {
                     var parsed = new URL(url);
                     var intentUrl = 'intent://' + parsed.hostname + parsed.pathname + parsed.search + parsed.hash + '#Intent;scheme=https;end;';
@@ -195,28 +206,54 @@
                 } catch(e) {
                     window.location.href = url;
                 }
-            } else {
-                // iOS: x-safari scheme to force Safari
+            } else if (isIOS()) {
+                // iOS: x-safari scheme to force external Safari from TikTok in-app browser
                 var safariUrl = url.replace(/^https:\/\//, 'x-safari-https://').replace(/^http:\/\//, 'x-safari-http://');
                 window.location.href = safariUrl;
+            } else {
+                // Desktop / other browsers: direct redirect so testing works properly
+                window.location.href = url;
             }
         }
 
         function handleContinue() {
-            // Use dest param if provided, otherwise use the hardcoded affiliate link
+            // Use dest param if provided, otherwise default to the affiliate link
             var dest = getParam('dest');
             var url = dest ? decodeURIComponent(dest) : AFFILIATE_LINK;
 
-            // Pass through ALL URL params from the current page to the destination
-            var params = new URLSearchParams(window.location.search);
-            params.forEach(function(value, key) {
-                // Skip 'dest' param since that's the destination itself
+            // Collect all incoming parameters from search query
+            var incomingParams = new URLSearchParams(window.location.search);
+
+            // Also check hash in case TikTok or an ad tracker appends parameters after #
+            if (window.location.hash && window.location.hash.includes('=')) {
+                var hashSearch = window.location.hash.includes('?') 
+                    ? window.location.hash.split('?')[1] 
+                    : window.location.hash.replace(/^#\/?/, '');
+                var hashParams = new URLSearchParams(hashSearch);
+                hashParams.forEach(function(val, key) {
+                    if (!incomingParams.has(key)) {
+                        incomingParams.set(key, val);
+                    }
+                });
+            }
+
+            // Explicitly grab ttclid (TikTok Click ID)
+            var ttclid = incomingParams.get('ttclid');
+
+            // Pass through all parameters to the destination
+            incomingParams.forEach(function(val, key) {
                 if (key === 'dest') return;
-                // Only add if not already in the URL
-                if (!url.includes(key + '=')) {
-                    url = appendParam(url, key, value);
+                // Avoid duplicating existing parameters in destination URL
+                var paramRegex = new RegExp('[?&]' + key + '=');
+                if (!paramRegex.test(url)) {
+                    url = appendParam(url, key, val);
                 }
             });
+
+            // Double check that ttclid is present on destination if it was in the source URL
+            if (ttclid && !/[?&]ttclid=/.test(url)) {
+                url = appendParam(url, 'ttclid', ttclid);
+            }
 
             openInExternalBrowser(url);
         }
